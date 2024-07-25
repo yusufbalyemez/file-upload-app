@@ -1,19 +1,19 @@
 const multer = require('multer');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+const { generateUniqueFilename, validateFileType } = require('../utils/fileUtils');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/images/');
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = `${uuidv4()}${path.extname(file.originalname)}`;
-    cb(null, uniqueSuffix);
+    const uniqueFilename = generateUniqueFilename(file.originalname);
+    cb(null, uniqueFilename);
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  if (!file.mimetype.startsWith('image/')) {
+  if (!validateFileType(file)) {
     return cb(new Error('Yalnızca görüntü dosyaları yüklenebilir'), false);
   }
   cb(null, true);
