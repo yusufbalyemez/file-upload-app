@@ -6,6 +6,7 @@ const ImageUploader = () => {
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState(null);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -43,7 +44,7 @@ const ImageUploader = () => {
     try {
       const formData = new FormData();
       formData.append('file', image);
-      const response = await fetch('/api/upload', {
+      const response = await fetch(`${apiUrl}/api/upload`, {
         method: 'POST',
         body: formData,
       });
