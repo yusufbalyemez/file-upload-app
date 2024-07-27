@@ -1,10 +1,12 @@
 import React from 'react';
-import ImageUploader from './components/ImageUploader';
+import AllImages from './components/AllImages';
+/* import ImageUploader from './components/ImageUploader'; */
+
 
 function App() {
   return (
     <div className="App">
-      <ImageUploader />
+      <AllImages/>
     </div>
   );
 }
