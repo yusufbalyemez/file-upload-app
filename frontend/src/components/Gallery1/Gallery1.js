@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Modal from 'react-modal';
@@ -11,13 +11,28 @@ import 'swiper/css/pagination';
 import './styles.css';
 
 // import required modules
-import { EffectCoverflow, Pagination } from 'swiper/modules'
+import { EffectCoverflow, Pagination } from 'swiper/modules';
 
 Modal.setAppElement('#root'); // Modal için root elementini belirleyin
 
 const Gallery1 = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('http://localhost:5001/api/images');
+        const data = await response.json();
+        setImages(data);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+
+    fetchImages();
+  }, []);
 
   const openModal = (imgSrc) => {
     setSelectedImage(imgSrc);
@@ -48,33 +63,15 @@ const Gallery1 = () => {
         modules={[EffectCoverflow, Pagination]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-1.jpg" alt='slider1' onClick={() => openModal("https://swiperjs.com/demos/images/nature-1.jpg")} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-2.jpg" alt='slider2' onClick={() => openModal("https://swiperjs.com/demos/images/nature-2.jpg")} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" alt='slider3' onClick={() => openModal("https://swiperjs.com/demos/images/nature-3.jpg")} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-4.jpg" alt='slider4' onClick={() => openModal("https://swiperjs.com/demos/images/nature-4.jpg")} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-5.jpg" alt='slider5' onClick={() => openModal("https://swiperjs.com/demos/images/nature-5.jpg")} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-6.jpg" alt='slider6' onClick={() => openModal("https://swiperjs.com/demos/images/nature-6.jpg")} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-7.jpg" alt='slider7' onClick={() => openModal("https://swiperjs.com/demos/images/nature-7.jpg")} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-8.jpg" alt='slider8' onClick={() => openModal("https://swiperjs.com/demos/images/nature-8.jpg")} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-9.jpg" alt='slider9' onClick={() => openModal("https://swiperjs.com/demos/images/nature-9.jpg")} />
-        </SwiperSlide>
+        {images.map((image) => (
+          <SwiperSlide key={image._id}>
+            <img
+              src={`http://localhost:5001/uploads/images/${image.filename}`}
+              alt={image.filename}
+              onClick={() => openModal(`http://localhost:5001/uploads/images/${image.filename}`)}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       <Modal
@@ -85,7 +82,7 @@ const Gallery1 = () => {
         overlayClassName="overlay"
       >
         <div className='absolute right-1 top-1'>
-        <button onClick={closeModal} className='px-3 py-1 bg-gray-600 rounded-full text-white mb-1'>X</button>
+          <button onClick={closeModal} className='px-3 py-1 bg-gray-600 rounded-full text-white mb-1'>X</button>
         </div>
         <img src={selectedImage} alt="Selected" className="modal-image" />
       </Modal>
