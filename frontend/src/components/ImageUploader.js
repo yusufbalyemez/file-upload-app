@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Resizer from 'react-image-file-resizer';
+import { message } from 'antd';
 
 const ImageUploader = () => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState(null);
+  const fileInputRef = useRef(null); // Dosya inputu referansı
 
   const apiUrl = process.env.REACT_APP_API_URL;
   const handleImageChange = (e) => {
@@ -53,7 +55,15 @@ const ImageUploader = () => {
       }
       const data = await response.json();
       console.log('Yükleme başarılı:', data);
+      
+      // Yükleme başarılı olduğunda mesaj göster
+      message.success('Dosya başarıyla yüklendi!');
+      setPreview(null); // Yüklemeden sonra önizlemeyi kaldır
+      setImage(null); // Yüklemeden sonra seçili dosyayı temizle
+      fileInputRef.current.value = null; // Dosya inputunu temizle
     } catch (error) {
+      // Yükleme başarısız olduğunda mesaj göster
+      message.error('Dosya yükleme başarısız oldu.');
       setError('Dosya yükleme başarısız oldu.');
     }
   };
@@ -67,6 +77,7 @@ const ImageUploader = () => {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
+            ref={fileInputRef} // Dosya inputuna referans ekledik
             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}

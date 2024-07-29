@@ -19,6 +19,9 @@ const Header = () => {
           <Link to="/gorseller" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
             Görseller
           </Link>
+          <Link to="/galeri1" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+            Galeri 1
+          </Link>
         </div>
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-gray-300 hover:text-white focus:outline-none">
@@ -35,6 +38,9 @@ const Header = () => {
           </Link>
           <Link to="/gorseller" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
             Görseller
+          </Link>
+          <Link to="/galeri1" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+            Galeri 1
           </Link>
         </div>
       )}
