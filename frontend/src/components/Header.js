@@ -22,6 +22,9 @@ const Header = () => {
           <Link to="/galeri1" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
             Galeri 1
           </Link>
+          <Link to="/yazi-ekle" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+            Yazı Ekle
+          </Link>
         </div>
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-gray-300 hover:text-white focus:outline-none">
@@ -41,6 +44,9 @@ const Header = () => {
           </Link>
           <Link to="/galeri1" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
             Galeri 1
+          </Link>
+          <Link to="/yazi-ekle" className="block text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+            Yazı Ekle
           </Link>
         </div>
       )}

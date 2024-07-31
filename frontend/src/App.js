@@ -3,6 +3,7 @@ import AllImages from "./components/AllImages";
 import ImageUploader from "./components/ImageUploader";
 import Header from "./components/Header";
 import Gallery1 from "./components/Gallery1/Gallery1";
+import TextEditor from "./components/TinyMCE/TextEditor";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<ImageUploader />} />
           <Route path="/gorseller" element={<AllImages />} />
           <Route path="/galeri1" element={<Gallery1/>} />
+          <Route path="/yazi-ekle" element={<TextEditor/>} />
         </Routes>
       </Router>
     </div>
